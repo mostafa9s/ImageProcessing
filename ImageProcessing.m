@@ -39,4 +39,15 @@ imshow(filtered_image, 'Parent', handles.axes1);
 % Update the handles structure to store the filtered image as the new current image
 handles.current_image = filtered_image;
 guidata(hObject, handles);
+function varargout = testing_OutputFcn(hObject, eventdata, handles) 
+varargout{1} = handles.output;
+% Initialize current_image as an empty matrix
+handles.current_image = [];
 
+% start function
+function startpc_Callback(hObject, eventdata, handles)
+% in code baraye peydakardan webcam id system
+webcam_info = imaqhwinfo('winvideo');
+webcam_id = webcam_info.DeviceIDs;
+handles.vid = videoinput('winvideo' , 1, 'YUY2_640X480');
+guidata(hObject, handles);
