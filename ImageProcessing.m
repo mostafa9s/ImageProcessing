@@ -51,3 +51,23 @@ webcam_info = imaqhwinfo('winvideo');
 webcam_id = webcam_info.DeviceIDs;
 handles.vid = videoinput('winvideo' , 1, 'YUY2_640X480');
 guidata(hObject, handles);
+% Stop the webcam
+stop(handles.vid);
+
+% Capture the current frame
+captured_frame = getdata(handles.vid, 1);
+
+% Display the captured frame in its original color
+axes(handles.axes1);
+imshow(captured_frame);  % Display the raw (color) captured frame
+
+% Update the handles structure with the captured frame
+handles.current_image = captured_frame;
+
+% Store the original captured frame in the handles structure
+handles.original_image = captured_frame;
+
+% Perform additional image processing functions here if needed
+
+% Update the handles structure
+guidata(hObject, handles);
