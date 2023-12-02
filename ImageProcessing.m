@@ -43,6 +43,19 @@ function varargout = testing_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 % Initialize current_image as an empty matrix
 handles.current_image = [];
+% Update the GUI with the sheared image
+axes(handles.axes1);
+imshow(sheared_image);
+
+% Update the handles structure
+handles.current_image = sheared_image;
+guidata(hObject, handles);
+
+% --- Executes on button press in GaussianFilter.
+function GaussianFilter_Callback(hObject, eventdata, handles)
+% hObject    handle to GaussianFilter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 % start function
 function startpc_Callback(hObject, eventdata, handles)
