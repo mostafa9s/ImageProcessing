@@ -43,7 +43,17 @@ function ShearImageHorizontally_Callback(hObject, eventdata, handles)
 % hObject    handle to ShearImageHorizontally (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+% hObject    handle to ShearImageVertically (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
+% Get the current image
+image = handles.current_image;
+
+% Prompt the user for the shear angle
+prompt = {'Enter the shear angle (in degrees):'};
+dlgtitle = 'Shear Image Vertically';
+dims = [1 35];
 % Get the current image
 image = handles.current_image;
 
