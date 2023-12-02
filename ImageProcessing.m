@@ -35,6 +35,66 @@ filtered_image = imgaussfilt(handles.current_image, sigma);
 
 % Show the filtered image in the GUI
 imshow(filtered_image, 'Parent', handles.axes1);
+% --- Executes on button press in ShearImageVertically.
+function ShearImageVertically_Callback(hObject, eventdata, handles)
+% hObject    handle to ShearImageVertically (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get the current image
+image = handles.current_image;
+
+% Prompt the user for the shear angle
+prompt = {'Enter the shear angle (in degrees):'};
+dlgtitle = 'Shear Image Vertically';
+dims = [1 35];
+definput = {'30'};
+answer = inputdlg(prompt,dlgtitle,dims,definput);
+if isempty(answer)
+    % User cancelled the dialog box
+    return;
+end
+angle = str2double(answer{1});
+
+% Shear the image vertically using imwarp
+tform = affine2d([1 tand(angle) 0; 0 1 0; 0 0 1]);
+sheared_image = imwarp(image, tform);
+
+% Update the GUI with the sheared image
+axes(handles.axes1);
+imshow(sheared_image);
+
+% Update the handles structure
+handles.current_image = sheared_image;
+guidata(hObject, handles);
+
+% --- Executes on button press in GaussianFilter.
+function GaussianFilter_Callback(hObject, eventdata, handles)
+% hObject    handle to GaussianFilter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Prompt the user for the standard deviation of the Gaussian filter
+prompt = {'Enter the standard deviation of the Gaussian filter:'};
+dlgtitle = 'Gaussian Filter';
+dims = [1 35];
+definput = {'1'};
+answer = inputdlg(prompt,dlgtitle,dims,definput);
+if isempty(answer)
+    % User cancelled the dialog box
+    return;
+end
+sigma = str2double(answer{1});
+
+% Apply the Gaussian filter to the current image
+filtered_image = imgaussfilt(handles.current_image, sigma);
+
+% Show the filtered image in the GUI
+imshow(filtered_image, 'Parent', handles.axes1);
+
+% Update the handles structure to store the filtered image as the new current image
+handles.current_image = filtered_image;
+guidata(hObject, handles);
 
 % Update the handles structure to store the filtered image as the new current image
 handles.current_image = filtered_image;
