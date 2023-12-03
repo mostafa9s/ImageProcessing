@@ -103,7 +103,38 @@ function varargout = testing_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 % Initialize current_image as an empty matrix
 handles.current_image = [];
+% --- Executes on button press in ShearImageHorizontally.
+function ShearImageHorizontally_Callback(hObject, eventdata, handles)
+% hObject    handle to ShearImageHorizontally (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
+% Get the current image
+image = handles.current_image;
+
+% Prompt the user for the shear angle
+prompt = {'Enter the shear angle (in degrees):'};
+dlgtitle = 'Shear Image Horizontally';
+dims = [1 35];
+definput = {'30'};
+answer = inputdlg(prompt,dlgtitle,dims,definput);
+if isempty(answer)
+    % User cancelled the dialog box
+    return;
+end
+angle = str2double(answer{1});
+
+% Shear the image horizontally using imwarp
+tform = affine2d([1 0 0; tand(angle) 1 0; 0 0 1]);
+sheared_image = imwarp(image, tform);
+
+% Update the GUI with the sheared image
+axes(handles.axes1);
+imshow(sheared_image);
+
+% Update the handles structure
+handles.current_image = sheared_image;
+guidata(hObject, handles)
 % start function
 function startpc_Callback(hObject, eventdata, handles)
 % in code baraye peydakardan webcam id system
